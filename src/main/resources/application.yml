@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: deepresearch
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  ai:
+    dashscope:
+      chat:
+        options:
+          model: qwen3.6-max-preview
+  autoconfigure:
+    exclude:
+      # Phase 1 does not use JDBC or PgVector. Re-enable datasource auto configuration
+      # when the RAG/vector-store phase introduces concrete connection settings.
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.ai.vectorstore.pgvector.autoconfigure.PgVectorStoreAutoConfiguration
+
+server:
+  port: ${SERVER_PORT:8080}
+
+app:
+  deepresearch:
+    phase: 1
+    graph:
+      recursion-limit: 20
